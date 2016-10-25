@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Projet Web{% endblock %}</title>
+  </head>
+  <body>
+  <div id="menu">
+  {{ render(controller("PWProgresSiesBundle:ProgresSies:menu")) }}
+  </div>
+    {% block body %}
+    HELLO world
+    {% endblock %}
+
+  </body>
+</html>
