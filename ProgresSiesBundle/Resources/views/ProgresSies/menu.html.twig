@@ -1,8 +1,8 @@
 <ul class="nav nav-pills nav-stacked">
-  {% for advert in listAdverts %}
+  {% for serie in Series %}
     <li>
-      <a href="{{ path('pw_progres_sies_view', {'id': advert.id}) }}">
-        {{ advert.title }}
+      <a href="{{ path('pw_progres_sies_view', {'id': serie.id}) }}">
+        {{ serie.title }}
       </a>
     </li>
   {% endfor %}

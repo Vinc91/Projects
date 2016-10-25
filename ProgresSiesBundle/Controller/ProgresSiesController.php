@@ -30,15 +30,14 @@ class ProgresSiesController extends Controller
     {
     // On fixe en dur une liste ici, bien entendu par la suite
     // on la récupérera depuis la BDD !
-    $listAdverts = array(
+    $Series = array(
       array('id' => 2, 'title' => 'Walking Dead'),
       array('id' => 5, 'title' => 'Game of Thrones'),
-      array('id' => 9, 'title' => 'Breaking Bad')
+      array('id' => 7, 'title' => 'Breaking Bad'),
+      array('id' => 9, 'title' => 'House of cards')
     );
 
-    return $this->render('PWProgresSiesBundle:ProgresSies:menu.html.twig', array(
-      'listAdverts' => $listAdverts
-    ));
+    return $this->render('PWProgresSiesBundle:ProgresSies:menu.html.twig', array('Series' => $Series) );
 	}
 
 }
