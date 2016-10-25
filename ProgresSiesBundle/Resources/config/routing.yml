@@ -1,0 +1,3 @@
+pw_progres_sies_homepage:
+    path:     /
+    defaults: { _controller: PWProgresSiesBundle:Default:index }
