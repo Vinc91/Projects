@@ -20,6 +20,12 @@ class ProgresSiesController extends Controller
     return $this->render('PWProgresSiesBundle:ProgresSies:view.html.twig', array('id'  => $id));
     }
 
+    public function viewallAction()
+    {
+
+    return $this->render('PWProgresSiesBundle:ProgresSies:viewall.html.twig');
+    }
+
     public function addAction()
     {
 

@@ -8,6 +8,11 @@ pw_progres_sies_view:
     defaults:
         _controller: PWProgresSiesBundle:ProgresSies:view
 
+pw_progres_sies_viewall:
+    path:     /progressies/mes_series
+    defaults:
+        _controller: PWProgresSiesBundle:ProgresSies:viewall
+
 pw_progres_sies_update:
     path:     /progressies/update/{id}
     defaults:

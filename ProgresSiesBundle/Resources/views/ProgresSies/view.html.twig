@@ -2,6 +2,12 @@
 
 {% block title %}{{ parent() }} - View{% endblock %}
 
+{% block header %}
+      <div id="header" class="starter-template" style="background-color:#FFFFFF; ">
+        <h1 style="text-align: center; font-size:50px">ProgresSies</h1>
+      </div>
+{% endblock %}
+
 {% block body %}
  <h2> VOici la serie d'id: {{id}} </h2>
 {% endblock %}

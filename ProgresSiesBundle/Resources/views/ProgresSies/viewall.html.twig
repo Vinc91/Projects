@@ -1,4 +1,6 @@
-{% extends "PWProgresSiesBundle::layout.html.twig " %}
+{% extends "PWProgresSiesBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - ViewAll{% endblock %}
 
 {% block header %}
       <div id="header" class="starter-template" style="background-color:#FFFFFF; ">
@@ -7,6 +9,5 @@
 {% endblock %}
 
 {% block body %}
-	{{ include("PWProgresSiesBundle:ProgresSies:form.html.twig") }}
-	<p> On pourra ajouter une serie </p>
+ <h2> Voici toutes mes series en cours</h2>
 {% endblock %}
