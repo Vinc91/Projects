@@ -3,7 +3,6 @@
 namespace PW\ProgresSiesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Serie
@@ -23,8 +22,7 @@ class Serie
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PW\ProgresSiesBundle\Entity\Genre", cascade={"persist"})
-     * @ORM\JoinTable(name="pw_serie_genre")
+     * @ORM\ManyToMany(targetEntity="PW\ProgresSies\Entity\Genre", cascade={"persist"})
      */
     private $genres;
 
@@ -73,7 +71,6 @@ class Serie
 
         $this->avancement = 0;
         $this->date= 2016;
-        $this->genres = new ArrayCollection();
     }
     /**
      * Get id
@@ -215,39 +212,5 @@ class Serie
     public function getImage()
     {
         return $this->image;
-    }
-
-    /**
-     * Add genre
-     *
-     * @param \PW\ProgresSies\Entity\Genre $genre
-     *
-     * @return Serie
-     */
-    public function addGenre(\PW\ProgresSies\Entity\Genre $genre)
-    {
-        $this->genres[] = $genre;
-
-        return $this;
-    }
-
-    /**
-     * Remove genre
-     *
-     * @param \PW\ProgresSies\Entity\Genre $genre
-     */
-    public function removeGenre(\PW\ProgresSies\Entity\Genre $genre)
-    {
-        $this->genres->removeElement($genre);
-    }
-
-    /**
-     * Get genres
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGenres()
-    {
-        return $this->genres;
     }
 }

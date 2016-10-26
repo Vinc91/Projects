@@ -22,6 +22,12 @@ class Saison
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="PW\ProgresSiesBundle\Entity\Serie")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $serie;
+    
+    /**
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255)
@@ -93,5 +99,26 @@ class Saison
     {
         return $this->checked;
     }
-}
 
+    /**
+     * Set serie
+     *
+     * @param \PW\ProgresSiesBundle\Entity\Serie $serie
+     *
+     * @return Saison
+     */
+    public function setSerie(\PW\ProgresSiesBundle\Entity\Serie $serie)
+    {
+        $this->serie = $serie;
+    }
+
+    /**
+     * Get serie
+     *
+     * @return \PW\ProgresSiesBundle\Entity\Serie
+     */
+    public function getSerie()
+    {
+        return $this->serie;
+    }
+}

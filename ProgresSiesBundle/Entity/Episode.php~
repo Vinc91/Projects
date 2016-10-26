@@ -99,26 +99,5 @@ class Episode
     {
         return $this->checked;
     }
-
-    /**
-     * Set saison
-     *
-     * @param \PW\ProgresSiesBundle\Entity\Saison $saison
-     *
-     * @return Episode
-     */
-    public function setSaison(\PW\ProgresSiesBundle\Entity\Saison $saison)
-    {
-        $this->saison = $saison;
-    }
-
-    /**
-     * Get saison
-     *
-     * @return \PW\ProgresSiesBundle\Entity\Saison
-     */
-    public function getSaison()
-    {
-        return $this->saison;
-    }
 }
+
