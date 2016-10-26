@@ -3,6 +3,7 @@
 namespace PW\ProgresSiesBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use PW\ProgresSiesBundle\Entity\Serie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -11,13 +12,18 @@ class ProgresSiesController extends Controller
 {
     public function indexAction()
     {
+        
+
         return $this->render('PWProgresSiesBundle:ProgresSies:index.html.twig');
     }
 
     public function viewAction($id)
     {
 
-    return $this->render('PWProgresSiesBundle:ProgresSies:view.html.twig', array('id'  => $id));
+    	$repository= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Serie');
+    	$serie = $repository->find($id);
+
+    return $this->render('PWProgresSiesBundle:ProgresSies:view.html.twig', array('serie'  => $serie));
     }
 
     public function viewallAction()
@@ -26,9 +32,15 @@ class ProgresSiesController extends Controller
     return $this->render('PWProgresSiesBundle:ProgresSies:viewall.html.twig');
     }
 
-    public function addAction()
+    public function addAction(Request $request)
     {
-
+    	$serie = new Serie();
+    	$serie->setTitre("Walking Dead");
+    	$serie->setCreateur("MArivin gay");
+    	$serie->setNbSaisons(7);
+    	$em = $this->getDoctrine()->getManager();
+    	$em->persist($serie);
+    	$em->flush();
     return $this->render('PWProgresSiesBundle:ProgresSies:add.html.twig');
 	}
 
