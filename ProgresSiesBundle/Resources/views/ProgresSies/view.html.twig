@@ -9,8 +9,12 @@
 {% endblock %}
 
 {% block body %}
- <h2> VOici la serie d'id: {{serie.id}} </h2>
+ <h2> {{ serie.titre}} </h2>
+ {% if serie.image is not null %}
+ <img src="{{ serie.image.url }}" width="180" height="250" alt=" {{serie.image.alt}}">
+ {% endif %}
  <p>Je suis la serie de titre {{serie.titre}}</p></br>
  <p>J'ai {{ serie.nbsaisons }} saisons</p>
  <p>J'ai été crée en {{serie.date }} par {{serie.createur}} </p>
+
 {% endblock %}

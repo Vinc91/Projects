@@ -56,8 +56,6 @@ class Image
     public function setUrl($url)
     {
         $this->url = $url;
-
-        return $this;
     }
 
     /**
@@ -80,8 +78,6 @@ class Image
     public function setAlt($alt)
     {
         $this->alt = $alt;
-
-        return $this;
     }
 
     /**

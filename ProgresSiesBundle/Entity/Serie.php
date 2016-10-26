@@ -29,6 +29,12 @@ class Serie
     private $titre;
 
     /**
+    * @ORM\OneToOne(targetEntity="PW\ProgresSiesBundle\Entity\Image", cascade={"persist"})
+    * @ORM\JoinColumn(nullable=true)
+    */
+    private $image;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="integer", nullable=true)
@@ -180,5 +186,26 @@ class Serie
     {
         return $this->avancement;
     }
-}
 
+    /**
+     * Set image
+     *
+     * @param \PW\ProgresSiesBundle\Entity\Image $image
+     *
+     * @return Serie
+     */
+    public function setImage(\PW\ProgresSiesBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \PW\ProgresSiesBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+}

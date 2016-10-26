@@ -4,6 +4,7 @@ namespace PW\ProgresSiesBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PW\ProgresSiesBundle\Entity\Serie;
+use PW\ProgresSiesBundle\Entity\Image;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -38,6 +39,13 @@ class ProgresSiesController extends Controller
     	$serie->setTitre("Walking Dead");
     	$serie->setCreateur("MArivin gay");
     	$serie->setNbSaisons(7);
+    
+    	$image= new Image();
+    	$image->setUrl('http://fr.web.img5.acsta.net/medias/nmedia/18/78/35/82/20303823.jpg');
+    	$image->setAlt('Walking Dead');
+
+    	$serie->setImage($image);
+
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($serie);
     	$em->flush();
