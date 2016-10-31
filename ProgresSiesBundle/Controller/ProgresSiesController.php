@@ -54,13 +54,14 @@ class ProgresSiesController extends Controller
 
 	public function menuAction()
     {
-    // On fixe en dur une liste ici, bien entendu par la suite
-    // on la récupérera depuis la BDD !
-    $Series = array(
-      array('id' => 2, 'title' => 'Walking Dead'),
-      array('id' => 5, 'title' => 'Game of Thrones'),
-      array('id' => 7, 'title' => 'Breaking Bad'),
-      array('id' => 9, 'title' => 'House of cards')
+    
+    $em = $this->getDoctrine()->getManager();
+
+    $Series = $em->getRepository('PWProgresSiesBundle:Serie')->findBy(
+      array(),
+      array(),
+      3, 
+      0 
     );
 
     return $this->render('PWProgresSiesBundle:ProgresSies:menu.html.twig', array('Series' => $Series) );

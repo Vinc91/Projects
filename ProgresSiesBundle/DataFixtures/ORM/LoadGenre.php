@@ -16,20 +16,20 @@ class LoadGenre implements FixtureInterface {
 				'Arts Martiaux',
 				'Aventure',
 				'Comédie',
-				'Drame',
-				'Musicale',
 				'Divers',
+				'Drame',
 				'Epouvante horreur',
 				'Espionnage',
+				'Fantastique',
 				'Historique',
-				'Politique',
-				'Policier',
-				'Sport',
-				'Science fiction',
-				'Western',
 				'Médical',
+				'Musicale',
+				'Policier',
+				'Politique',
 				'Romance',
-				'Fantastique'
+				'Science fiction',
+				'Sport',
+				'Western',
 
 		);
 
