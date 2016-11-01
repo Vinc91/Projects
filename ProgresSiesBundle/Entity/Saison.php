@@ -22,7 +22,7 @@ class Saison
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PW\ProgresSiesBundle\Entity\Serie")
+     * @ORM\ManyToOne(targetEntity="PW\ProgresSiesBundle\Entity\Serie", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $serie;

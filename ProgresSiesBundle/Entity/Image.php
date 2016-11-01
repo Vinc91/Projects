@@ -3,6 +3,7 @@
 namespace PW\ProgresSiesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Image
@@ -35,6 +36,19 @@ class Image
      */
     private $alt;
 
+    private $fichier;
+
+    public function getFichier() {
+
+        return $this->fichier;
+
+    }
+
+    public function setFichier(UploadedFile $fichier=null) {
+
+        $this->fichier = $fichier;
+
+    }
 
     /**
      * Get id
@@ -89,5 +103,19 @@ class Image
     {
         return $this->alt;
     }
+
+    public function upload() {
+
+        if(null == $this->fichier) {
+            return;
+        }
+
+        $name = $this->fichier->getClientOriginalName();
+        $this->fichier->move(__DIR__.'/../Resources/images', $name);
+        $this->url = '../images/'.$name;
+        $this->alt = $name;
+
+    }
+
 }
 

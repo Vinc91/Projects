@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block body %}
- <div id="conteneur" style="display: flex; flex-wrap: nowrap;">
+ <div id="conteneur" style="display: flex; flex-wrap: nowrap; margin-top:20px">
  	 <div class="element">
  		{% if serie.image is not null %}
  			<img src="{{ serie.image.url }}" width="180" height="250" alt=" {{serie.image.alt}}">
@@ -21,5 +21,18 @@
 		 <p>J'ai {{ serie.nbsaisons }} saisons</p>
 		 <p>J'ai été crée en {{serie.date }} par {{serie.createur}} </p>
  	</div>
+
+</div>
+<div class=col-md-4 style="margin-top:20px; margin-left:410px">
+ 	 <a href="{{ path('pw_progres_sies_update', {'id': serie.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier la série
+    </a>
+</div>
+<div class=col-md-4 style="margin-top:20px; margin-left:-130px">
+    <a href="{{ path('pw_progres_sies_delete', {'id': serie.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer la série
+    </a>
 </div>
 {% endblock %}
