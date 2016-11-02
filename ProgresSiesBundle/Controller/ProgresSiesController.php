@@ -38,19 +38,11 @@ class ProgresSiesController extends Controller
     public function addAction(Request $request)
     {
     	$serie = new Serie();
-    	/*
-    	$serie->setTitre("Walking Dead");
-    	$serie->setCreateur("MArivin gay");
-    	$serie->setNbSaisons(7);
-    	*/
+    
     	$form= $this->get('form.factory')->create(SerieType::class, $serie);
-    	/*
-    	$image= new Image();
-    	$image->setUrl('http://fr.web.img5.acsta.net/medias/nmedia/18/78/35/82/20303823.jpg');
-    	$image->setAlt('Walking Dead');
-		
-    	$serie->setImage($image);
-    	*/
+    	
+
+
     	if( $request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
     		if($serie->getImage() != null) {
     			$serie->getImage()->upload();
@@ -74,6 +66,22 @@ class ProgresSiesController extends Controller
 
 	public function updateAction($id, Request $request) {
 			return $this->render('PWProgresSiesBundle:update.html.twig');
+	}
+
+
+	public function deleteAction($id) {
+		$em = $this->getDoctrine()->getManager();
+		$serie = $em->getRepository('PWProgresSiesBundle:Serie')->find($id);
+		$saisons = $em->getRepository('PWProgresSiesBundle:Saison')->find($serie);
+		foreach($saisons as $saison ) {
+			$em->remove($saison);
+			$em->flush();
+		}
+
+		$em->remove($serie);
+		$em->flush();
+		return $this->redirectToRoute('pw_progres_sies_home');
+
 	}
 
 	public function menuAction()
