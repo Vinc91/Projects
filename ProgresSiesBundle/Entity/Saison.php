@@ -22,7 +22,7 @@ class Saison
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PW\ProgresSiesBundle\Entity\Serie", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PW\ProgresSiesBundle\Entity\Serie", cascade={"persist"}, inversedBy="saisons")
      * @ORM\JoinColumn(nullable=false)
      */
     private $serie;
@@ -96,8 +96,13 @@ class Saison
     public function setChecked($checked)
     {
         $this->checked = $checked;
-
-        return $this;
+        if(true == $this->checked){
+            $this->avancement=100;
+        }else{
+            if(false == $this->checked) {
+                $this->avancement=0;
+            }
+        }
     }
 
     /**

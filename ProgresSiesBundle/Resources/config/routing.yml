@@ -4,9 +4,11 @@ pw_progres_sies_home:
         _controller: PWProgresSiesBundle:ProgresSies:index
 
 pw_progres_sies_view:
-    path:     /progressies/series/{id}
+    path:     /progressies/series/{id}/{choice}/{saisonid}
     defaults:
         _controller: PWProgresSiesBundle:ProgresSies:view
+        choice:      0
+        saisonid:    0
 
 pw_progres_sies_viewall:
     path:     /progressies/mes_series

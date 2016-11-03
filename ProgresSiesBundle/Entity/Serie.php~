@@ -256,49 +256,4 @@ class Serie
     {
         return $this->genres;
     }
-
-    /**
-     * Add saison
-     *
-     * @param \PW\ProgresSiesBundle\Entity\Saison $saison
-     *
-     * @return Serie
-     */
-    public function addSaison(\PW\ProgresSiesBundle\Entity\Saison $saison)
-    {
-        $this->saisons[] = $saison;
-        $saison->setSerie($this);
-        return $this;
-    }
-
-    /**
-     * Remove saison
-     *
-     * @param \PW\ProgresSiesBundle\Entity\Saison $saison
-     */
-    public function removeSaison(\PW\ProgresSiesBundle\Entity\Saison $saison)
-    {
-        $this->saisons->removeElement($saison);
-    }
-
-    /**
-     * Get saisons
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSaisons()
-    {
-        return $this->saisons;
-    }
-
-    public function setAvancementTotal() {
-        $saisons = $this->getSaisons();
-        $avanctotale=0;
-        foreach($saisons as $saison) {
-            $avanctotale = $avanctotale + $saison->getAvancement();
-        }
-        $avanctotale = $avanctotale / $this->nbSaisons;
-        $this->setAvancement(round($avanctotale));
-    }
-
 }

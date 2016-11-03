@@ -7,6 +7,7 @@ use PW\ProgresSiesBundle\Entity\Serie;
 use PW\ProgresSiesBundle\Entity\Saison;
 use PW\ProgresSiesBundle\Entity\Image;
 use PW\ProgresSiesBundle\Form\SerieType;
+use PW\ProgresSiesBundle\Form\SerieEditType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,26 +21,30 @@ class ProgresSiesController extends Controller
         return $this->render('PWProgresSiesBundle:ProgresSies:index.html.twig');
     }
 
-    public function viewAction($id)
+    public function viewAction($id, $choice, $saisonid)
     {
-
-    	$Series= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Serie');
-    	$Saisons= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Saison');
-    	$serie = $Series->find($id);
-    	$saisons = $Saisons->findBySerie($serie);
-    	$avanctotale=0;
-    	foreach($saisons as $saison) {
-    		$avanctotale = $avanctotale + $saison->getAvancement();
-    	}
-    	$avanctotale = $avanctotale / $serie->getNbSaisons();
-    	$serie->setAvancement(round($avanctotale));
     	$em = $this->getDoctrine()->getManager();
+    	$Series= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Serie');
+    	$serie = $Series->find($id);
+    	if(1 == $choice){
+    		$Saisons= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Saison');
+    		$saison = $Saisons->find($saisonid);
+    		$saison->setChecked(true);
+    		$em->persist($saison);
+    	}
+   		if($choice ==2){
+   			$Saisons= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Saison');
+    		$saison = $Saisons->find($saisonid);
+    		$saison->setChecked(false);
+    		$em->persist($saison);
+   		}
+    	$serie->setAvancementTotal();
     	$em->persist($serie);
     	$em->flush();
-
+ 
     return $this->render('PWProgresSiesBundle:ProgresSies:view.html.twig', array(
     	'serie'  => $serie,
-    	'saisons' => $saisons));
+    	'saisons' => $serie->getSaisons()));
     }
 
     public function viewallAction()
@@ -62,6 +67,7 @@ class ProgresSiesController extends Controller
     		}
     		for($count=0; $count < $serie->getNbSaisons(); $count++) {
             	$saison = new Saison();
+            	$serie->addSaison($saison);
             	$saison->setSerie($serie);
             	$name = $count+1;
             	$saison->setTitre($serie->getTitre().' - Saison '.$name);
@@ -78,7 +84,19 @@ class ProgresSiesController extends Controller
 	}
 
 	public function updateAction($id, Request $request) {
-			return $this->render('PWProgresSiesBundle:update.html.twig');
+			$em =$this->getDoctrine()->getManager();
+			$serie = $em->getRepository('PWProgresSiesBundle:Serie')->find($id);
+			$form=$this->get('form.factory')->create(SerieEditType::class,$serie);
+
+		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+      		$em->flush();
+
+      		return $this->redirectToRoute('pw_progres_sies_view', array('id' => $serie->getId()));
+   		}
+
+	return $this->render('PWProgresSiesBundle:ProgresSies:update.html.twig', array('serie' => $serie,
+		'form'  => $form->createView()
+	));
 	}
 
 
@@ -112,5 +130,4 @@ class ProgresSiesController extends Controller
 
     return $this->render('PWProgresSiesBundle:ProgresSies:menu.html.twig', array('Series' => $Series) );
 	}
-
 }
