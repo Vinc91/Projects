@@ -126,26 +126,4 @@ class Saison
     {
         return $this->serie;
     }
-
-    /**
-     * Set avancement
-     *
-     * @param string $avancement
-     *
-     * @return Saison
-     */
-    public function setAvancement($avancement)
-    {
-        $this->avancement = $avancement;
-    }
-
-    /**
-     * Get avancement
-     *
-     * @return string
-     */
-    public function getAvancement()
-    {
-        return $this->avancement;
-    }
 }

@@ -23,10 +23,14 @@ class ProgresSiesController extends Controller
     public function viewAction($id)
     {
 
-    	$repository= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Serie');
-    	$serie = $repository->find($id);
+    	$Series= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Serie');
+    	$Saisons= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Saison');
+    	$serie = $Series->find($id);
+    	$saisons = $Saisons->findBySerie($serie);
 
-    return $this->render('PWProgresSiesBundle:ProgresSies:view.html.twig', array('serie'  => $serie));
+    return $this->render('PWProgresSiesBundle:ProgresSies:view.html.twig', array(
+    	'serie'  => $serie,
+    	'saisons' => $saisons));
     }
 
     public function viewallAction()
@@ -72,7 +76,8 @@ class ProgresSiesController extends Controller
 	public function deleteAction($id) {
 		$em = $this->getDoctrine()->getManager();
 		$serie = $em->getRepository('PWProgresSiesBundle:Serie')->find($id);
-		$saisons = $em->getRepository('PWProgresSiesBundle:Saison')->find($serie);
+		$saisons = $em->getRepository('PWProgresSiesBundle:Saison')->findBySerie($serie);
+
 		foreach($saisons as $saison ) {
 			$em->remove($saison);
 			$em->flush();
