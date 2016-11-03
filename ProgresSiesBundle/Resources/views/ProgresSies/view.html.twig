@@ -37,6 +37,7 @@
       {{serie.avancement}}%
       </div>
    </div>
+  {% if serie.image is not null %}
    <div style="padding-left: 335px">
     <a href="{{ path('pw_progres_sies_update', {'id': serie.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-edit"></i>
@@ -47,19 +48,30 @@
       Supprimer la série
     </a>
     </div>
+  {% else %}
+   <div style="padding-left: 515px">
+    <a href="{{ path('pw_progres_sies_update', {'id': serie.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier la série
+    </a>
+    <a href="{{ path('pw_progres_sies_delete', {'id': serie.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer la série
+    </a>
+    </div>
+  {% endif %}
  	</div>
 
 </div>
 
 
- {# {% for i in 1..serie.nbSaisons %} #}
+  {%set i=1 %}
  {% for saison in saisons %}
- {%set i=1 %}
 <div class="well">
 
  <div class="row">
 
-  <div class="col-md-3">
+  <div class="col-md-4">
     <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Saison {{i}}

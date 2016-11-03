@@ -27,6 +27,15 @@ class ProgresSiesController extends Controller
     	$Saisons= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Saison');
     	$serie = $Series->find($id);
     	$saisons = $Saisons->findBySerie($serie);
+    	$avanctotale=0;
+    	foreach($saisons as $saison) {
+    		$avanctotale = $avanctotale + $saison->getAvancement();
+    	}
+    	$avanctotale = $avanctotale / $serie->getNbSaisons();
+    	$serie->setAvancement(round($avanctotale));
+    	$em = $this->getDoctrine()->getManager();
+    	$em->persist($serie);
+    	$em->flush();
 
     return $this->render('PWProgresSiesBundle:ProgresSies:view.html.twig', array(
     	'serie'  => $serie,

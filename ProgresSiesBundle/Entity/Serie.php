@@ -65,7 +65,7 @@ class Serie
     /**
      * @var float
      *
-     * @ORM\Column(name="avancement", type="decimal")
+     * @ORM\Column(name="avancement", type="decimal", nullable=true)
      */
     private $avancement;
 

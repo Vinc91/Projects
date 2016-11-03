@@ -47,6 +47,11 @@ class Saison
      * @ORM\Column(name="avancement", type="decimal")
      */
     private $avancement;
+
+
+    public function __construct(){
+        $this->avancement=0;
+    }
     /**
      * Get id
      *
