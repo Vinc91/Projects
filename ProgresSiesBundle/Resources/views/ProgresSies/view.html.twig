@@ -8,6 +8,14 @@
       </div>
 {% endblock %}
 
+    {% block menu %}
+         <div id="menu" class="col-md-3">
+      <h3> Dernieres series suivies </h3>
+
+      {{ render(controller("PWProgresSiesBundle:ProgresSies:menu")) }}
+    </div>
+    {% endblock %}
+
 {% block body %}
  <div id="conteneur" style="display: flex; flex-wrap: nowrap; margin-top:20px; margin-bottom: 20px">
 

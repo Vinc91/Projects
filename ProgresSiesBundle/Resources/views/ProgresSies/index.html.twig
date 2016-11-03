@@ -3,5 +3,68 @@
 {% block title %}{{ parent() }} - Index{% endblock %}
 
 {% block body %}
-  <h2>Voici l'index</h2>
+  <h2>Index</h2>
+
+ {% set i = 0 %}
+  {% for serie in Series if i<3 %}
+	<div id="conteneur" style="display: flex; flex-wrap: nowrap; margin-top:20px; margin-bottom: 20px">
+
+ 	 <div class="element">
+ 		{% if serie.image is not null %}
+ 			<img src="{{ serie.image.url }}" width="180" height="250" alt=" {{serie.image.alt}}">
+ 		{% endif %}
+ 	 </div>
+
+ 	 <div class="element" style="margin-left: 20px; margin-top:-25px">
+
+ 		<h2> {{ serie.titre}} </h2>
+     <p style="margin-top: 20px">Crée par : <strong>{{serie.createur}} ({{serie.date }}) </strong></p>
+		 <p>Nombres de saisons : <strong> {{ serie.nbsaisons }}</strong></p>
+     {% if not serie.genres.empty %}
+      <p>Genre : <strong>
+        {%for genre in serie.genres %}
+          {{genre.name}}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+        </strong>
+      </p>
+      {% endif %}
+
+    <p>Avancement totale : </p>
+    <div class="progress">
+      <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{serie.avancement}}" aria-valuemin="0" aria-valuemax="100" style="width: {{serie.avancement}}%;">
+      {{serie.avancement}}%
+      </div>
+   </div>
+
+  {% if serie.image is not null %}
+   <div style="padding-left: 335px">
+    <a href="{{ path('pw_progres_sies_view', {'id': serie.id}) }}">
+	<button type="button" class="btn btn-default" aria-label="Left Align">
+  	<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+  	View Details
+	</button>
+    </a>
+    </div>
+  {% else %}
+
+  {% endif %}
+ 	</div>
+
+</div>
+
+ {% set i=i+1 %}
+ {% endfor %}
+
+{% endblock %}
+
+{% block add %}
+<h2> Ajouter une Serie </h2>
+<div style="padding-top: 20px">
+  <a href="{{ path('pw_progres_sies_add')}}">
+    <button type="button" class="btn btn-default" aria-label="Left Align">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    Ajouter une serie
+    </button>
+  </a>
+</div>
 {% endblock %}

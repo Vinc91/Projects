@@ -17,8 +17,16 @@ class ProgresSiesController extends Controller
     public function indexAction()
     {
         
+    $em = $this->getDoctrine()->getManager();
 
-        return $this->render('PWProgresSiesBundle:ProgresSies:index.html.twig');
+    $Series = $em->getRepository('PWProgresSiesBundle:Serie')->findBy(
+      array(),
+      array(),
+      3, 
+      0 
+    );
+    return $this->render('PWProgresSiesBundle:ProgresSies:index.html.twig', array(
+    	'Series'  => $Series));
     }
 
     public function viewAction($id, $choice, $saisonid)
@@ -26,7 +34,7 @@ class ProgresSiesController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$Series= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Serie');
     	$serie = $Series->find($id);
-    	if(1 == $choice){
+    	if($choice == 1){
     		$Saisons= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Saison');
     		$saison = $Saisons->find($saisonid);
     		$saison->setChecked(true);

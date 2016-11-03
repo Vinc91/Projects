@@ -45,14 +45,16 @@
 {% endblock %}
 
   <div class="row">
-    <div id="menu" class="col-md-3">
-      <h3> Dernieres series suivies </h3>
+    {% block menu %}
+    {% endblock %}
 
-      {{ render(controller("PWProgresSiesBundle:ProgresSies:menu")) }}
-    </div>
     <div id="content" class="col-md-9">
           {% block body %}
           {% endblock %}
+    </div>
+    <div class="col-md-3">
+        {% block add %}
+        {% endblock %}
     </div>
   </div>
 

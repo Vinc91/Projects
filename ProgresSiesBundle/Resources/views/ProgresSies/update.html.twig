@@ -6,6 +6,14 @@
       </div>
 {% endblock %}
 
+    {% block menu %}
+         <div id="menu" class="col-md-3">
+      <h3> Dernieres series suivies </h3>
+
+      {{ render(controller("PWProgresSiesBundle:ProgresSies:menu")) }}
+    </div>
+    {% endblock %}
+
 {% block body %}
 	<h3> Modifier votre série </h3>
 	{{ include("PWProgresSiesBundle:ProgresSies:form.html.twig") }}
