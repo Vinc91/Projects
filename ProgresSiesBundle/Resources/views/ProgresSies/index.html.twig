@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} - Index{% endblock %}
 
 {% block body %}
-  <h2>Index</h2>
+  <h2>Dernières séries suivies: </h2>
 
  {% set i = 0 %}
   {% for serie in Series if i<3 %}
@@ -46,7 +46,14 @@
     </a>
     </div>
   {% else %}
-
+   <div style="padding-left: 510px">
+      <a href="{{ path('pw_progres_sies_view', {'id': serie.id}) }}">
+      <button type="button" class="btn btn-default" aria-label="Left Align">
+      <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+      View Details
+      </button>
+      </a>
+  </div>
   {% endif %}
  	</div>
 

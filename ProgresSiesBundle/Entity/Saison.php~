@@ -3,7 +3,6 @@
 namespace PW\ProgresSiesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Saison
@@ -39,7 +38,6 @@ class Saison
      * @var string
      *
      * @ORM\Column(name="num", type="integer")
-     * @Assert\Range(min="1", minMessage="Choisissez un nombre supérieur à 0")
      */
     private $num;
 
@@ -166,29 +164,5 @@ class Saison
     public function getAvancement()
     {
         return $this->avancement;
-    }
-
-    /**
-     * Set num
-     *
-     * @param integer $num
-     *
-     * @return Saison
-     */
-    public function setNum($num)
-    {
-        $this->num = $num;
-
-        return $this;
-    }
-
-    /**
-     * Get num
-     *
-     * @return integer
-     */
-    public function getNum()
-    {
-        return $this->num;
     }
 }

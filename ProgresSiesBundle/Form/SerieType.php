@@ -26,9 +26,8 @@ class SerieType extends AbstractType
                 ->add('genres',      EntityType::class, array(
                     'class'        => 'PWProgresSiesBundle:Genre',
                     'choice_label' => 'name',
-                    'multiple'     => true   ,
+                    'multiple'     => true,
                     'expanded'     => true))
-                /*->add('image',      ImageType::class, array('required'=>false))*/
                 ->add('submit', SubmitType::class);
     }
     

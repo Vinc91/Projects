@@ -1,0 +1,88 @@
+<div class="well">
+{#{{form(form)}}#}
+
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {# Les erreurs générales du formulaire. #}
+  {{ form_errors(form) }}
+
+  {# Génération manuelle et éclatée : #}
+  <div class="form-group">
+    {# Génération du label. #}
+    {{ form_label(form.titre, "Titre de la série", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+
+    {# Affichage des erreurs pour ce champ précis. #}
+    {{ form_errors(form.titre) }}
+
+    <div class="col-sm-10">
+      {# Génération de l'input. #}
+      {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  {# Idem pour un autre champ. #}
+  <div class="form-group">
+    {{ form_label(form.date, "Date de création", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.date) }}
+    <div class="col-sm-10">
+      {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  {{ form_row(form.createur) }}
+
+  <div class="form-group">
+        {{ form_label(form.image) }}
+        {{ form_errors(form.image) }}
+     <div class="col-sm-10">
+        {{ form_widget(form.image, {'url':'Url', 'alt':'Alt'}, {'attr': {'class': 'form-control'}})}}
+     </div>
+  </div>
+
+  {{ form_row(form.genres)}}
+
+   <div id="serie_edit_saisons">
+    <div class="form-group">
+    <label class="col-sm-2 control-label required">
+    Saisons
+    </label>
+    {% set i=1 %}
+    {% for saison in saisons %}
+      <div class="form-group">
+        <div class="col-sm-10">
+          <div class="form_group">
+            <label class="col-sm-4 control-label required">{{saison.titre}}</label>
+            <div class="col-sm-3">
+              <button type="button" class="btn btn-default" aria-label="Left Align">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+               Ajouter des épisodes
+              </button>
+            </div>
+            <div class="col-sm-3">
+              <a href="{{ path('pw_progres_sies_update', {'id': serie.id, 'choice': 1, 'saisonid': saison.id}) }}"> 
+              <button type="button" class="btn btn-danger" aria-label="Left Align">
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+               Supprimer la saison
+              </button>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% set i=i+1 %}
+    {% endfor %}
+    <div class="col-sm-3 control-label required">
+     <a href="{{ path('pw_progres_sies_update', {'id': serie.id, 'choice': 2, 'saisonid': 0}) }}" id="add_saison" class="btn btn-default">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      Ajouter une saison
+     </a>
+    </div>
+    </div>
+  </div>
+
+   {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+  {# Fermeture de la balise <form> du formulaire HTML #}
+  {{ form_end(form) }}
+
+</div>

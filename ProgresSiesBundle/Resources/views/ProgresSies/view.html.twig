@@ -72,7 +72,7 @@
 
 </div>
 
-  {%set i=1 %}
+
  {% for saison in saisons %}
 <div class="well">
 
@@ -81,7 +81,7 @@
   <div class="col-md-4">
     <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Saison {{i}}
+      Saison {{saison.num}}
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
@@ -104,7 +104,6 @@
  </div>
 
 </div>
-{% set i=i+1 %}
   {% endfor %}
 
 {#

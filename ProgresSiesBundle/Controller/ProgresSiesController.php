@@ -34,17 +34,30 @@ class ProgresSiesController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$Series= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Serie');
     	$serie = $Series->find($id);
+    	$SaisonsRep= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Saison');
+    	$saisons=$em->getRepository('PWProgresSiesBundle:Saison')->findBy(
+    		array('serie' => $serie),
+    		array('num' => 'asc'),
+    		$serie->getNbSaisons(),
+    		0
+    	);
     	if($choice == 1){
-    		$Saisons= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Saison');
-    		$saison = $Saisons->find($saisonid);
+    		$saison = $SaisonsRep->find($saisonid);
     		$saison->setChecked(true);
     		$em->persist($saison);
+			$em->flush();
+    		return $this->redirectToRoute('pw_progres_sies_view', array('id' => $serie->getId(),
+				 'choice' => 0,
+				 'saisonid'  => 0));
     	}
    		if($choice ==2){
-   			$Saisons= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Saison');
-    		$saison = $Saisons->find($saisonid);
+    		$saison = $SaisonsRep->find($saisonid);
     		$saison->setChecked(false);
     		$em->persist($saison);
+			$em->flush();
+    		return $this->redirectToRoute('pw_progres_sies_view', array('id' => $serie->getId(),
+				 'choice' => 0,
+				 'saisonid'  => 0));
    		}
     	$serie->setAvancementTotal();
     	$em->persist($serie);
@@ -52,7 +65,7 @@ class ProgresSiesController extends Controller
  
     return $this->render('PWProgresSiesBundle:ProgresSies:view.html.twig', array(
     	'serie'  => $serie,
-    	'saisons' => $serie->getSaisons()));
+    	'saisons' => $saisons));
     }
 
     public function viewallAction()
@@ -77,8 +90,8 @@ class ProgresSiesController extends Controller
             	$saison = new Saison();
             	$serie->addSaison($saison);
             	$saison->setSerie($serie);
-            	$name = $count+1;
-            	$saison->setTitre($serie->getTitre().' - Saison '.$name);
+            	$saison->setNum($count+1);
+            	$saison->setTitre($serie->getTitre().' - Saison '.$saison->getNum());
             	$em = $this->getDoctrine()->getManager();
             	$em->persist($saison);
             	$em->flush();
@@ -91,18 +104,55 @@ class ProgresSiesController extends Controller
    		 return $this->render('PWProgresSiesBundle:ProgresSies:add.html.twig', array('form' => $form->createView()));
 	}
 
-	public function updateAction($id, Request $request) {
+	public function updateAction($id, $choice, $saisonid,Request $request) {
 			$em =$this->getDoctrine()->getManager();
 			$serie = $em->getRepository('PWProgresSiesBundle:Serie')->find($id);
+			$saisons=$em->getRepository('PWProgresSiesBundle:Saison')->findBy(
+    			array('serie' => $serie),
+    			array('num' => 'asc'),
+    			$serie->getNbSaisons(),
+    			0
+    		);
 			$form=$this->get('form.factory')->create(SerieEditType::class,$serie);
 
+			if($choice == 1){
+   			$SaisonsRep= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Saison');
+    		$saison = $SaisonsRep->find($saisonid);
+				$serie->removeSaison($saison);
+				$serie->setNbSaisons($serie->getNbSaisons()-1);
+				$em->remove($saison);
+				$em->flush();
+				return $this->redirectToRoute('pw_progres_sies_update', array(	 'id' => $serie->getId(),
+							'choice' => 0,
+							'saisonid'  => 0));
+			}
+
+			if($choice == 2){
+				$saison = new Saison();
+				$saison->setNum($serie->searchNum($saisons));
+				$saison->setTitre($serie->getTitre().' - Saison '.$saison->getNum());
+				$serie->addSaison($saison);
+				$serie->setNbSaisons($serie->getNbSaisons()+1);
+				$em->persist($saison);
+				$em->flush();
+				return $this->redirectToRoute('pw_progres_sies_update', array(
+							'id' => $serie->getId(),
+							'choice' => 0,
+							'saisonid'  => 0));
+
+			}
+
+
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+      		
       		$em->flush();
 
       		return $this->redirectToRoute('pw_progres_sies_view', array('id' => $serie->getId()));
    		}
 
-	return $this->render('PWProgresSiesBundle:ProgresSies:update.html.twig', array('serie' => $serie,
+	return $this->render('PWProgresSiesBundle:ProgresSies:update.html.twig', array(
+		'serie' => $serie,
+		'saisons' =>$saisons,
 		'form'  => $form->createView()
 	));
 	}

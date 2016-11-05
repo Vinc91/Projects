@@ -16,9 +16,11 @@ pw_progres_sies_viewall:
         _controller: PWProgresSiesBundle:ProgresSies:viewall
 
 pw_progres_sies_update:
-    path:     /progressies/update/{id}
+    path:     /progressies/update/{id}/{choice}/{saisonid}
     defaults:
         _controller: PWProgresSiesBundle:ProgresSies:update
+        choice:      0
+        saisonid:    0
 
 pw_progres_sies_delete:
     path:     /progressies/delete/{id}

@@ -4,12 +4,15 @@ namespace PW\ProgresSiesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Serie
  *
  * @ORM\Table(name="pw_serie")
  * @ORM\Entity(repositoryClass="PW\ProgresSiesBundle\Repository\SerieRepository")
+ * @UniqueEntity(fields="titre", message="Une serie existe déjà avec ce titre.")
  */
 class Serie
 {
@@ -36,7 +39,7 @@ class Serie
     /**
      * @var string
      *
-     * @ORM\Column(name="titre", type="string", length=255)
+     * @ORM\Column(name="titre", type="string", length=255, unique=true)
      */
     private $titre;
 
@@ -64,6 +67,7 @@ class Serie
      * @var int
      *
      * @ORM\Column(name="nb_saisons", type="integer")
+     * @Assert\Range(min="0", minMessage="Choisissez un nombre positif")
      */
     private $nbSaisons;
 
@@ -230,7 +234,7 @@ class Serie
      *
      * @return Serie
      */
-    public function addGenre(\PW\ProgresSies\Entity\Genre $genre)
+    public function addGenre(\PW\ProgresSiesBundle\Entity\Genre $genre)
     {
         $this->genres[] = $genre;
 
@@ -242,7 +246,7 @@ class Serie
      *
      * @param \PW\ProgresSies\Entity\Genre $genre
      */
-    public function removeGenre(\PW\ProgresSies\Entity\Genre $genre)
+    public function removeGenre(\PW\ProgresSiesBundle\Entity\Genre $genre)
     {
         $this->genres->removeElement($genre);
     }
@@ -266,6 +270,7 @@ class Serie
      */
     public function addSaison(\PW\ProgresSiesBundle\Entity\Saison $saison)
     {
+
         $this->saisons[] = $saison;
         $saison->setSerie($this);
         return $this;
@@ -297,8 +302,25 @@ class Serie
         foreach($saisons as $saison) {
             $avanctotale = $avanctotale + $saison->getAvancement();
         }
+        if($this->nbSaisons >0) {
         $avanctotale = $avanctotale / $this->nbSaisons;
+        }else{
+            $avanctotale=0;
+        }
+
         $this->setAvancement(round($avanctotale));
     }
 
+    public function searchNum($saisons) {
+
+        $num = 1;
+        foreach($saisons as $saison) {
+            if($saison->getNum() != $num) {
+                return $num;
+            }else{
+                $num=$num+1;
+            }
+        }
+        return $num;
+    }
 }
