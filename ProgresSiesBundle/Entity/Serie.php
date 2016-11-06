@@ -57,6 +57,11 @@ class Serie
     private $date;
 
     /**
+     * @ORM\Column(name="mis_a_jour", type="datetime", nullable=true)
+     */
+    private $maj;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="createur", type="string", length=255, nullable=true)
@@ -84,6 +89,7 @@ class Serie
         $this->date= 2016;
         $this->genres = new ArrayCollection();
         $this->saisons = new ArrayCollection();
+        $this->maj = new \Datetime();
     }
     /**
      * Get id
@@ -322,5 +328,30 @@ class Serie
             }
         }
         return $num;
+    }
+
+    /**
+     * Set maj
+     *
+     * @param \DateTime $maj
+     *
+     * @return Serie
+     */
+    public function setMaj()
+    {
+        $maj = new \Datetime();
+        $this->maj = $maj;
+
+        return $this;
+    }
+
+    /**
+     * Get maj
+     *
+     * @return \DateTime
+     */
+    public function getMaj()
+    {
+        return $this->maj;
     }
 }

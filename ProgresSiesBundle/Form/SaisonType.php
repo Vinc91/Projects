@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use PW\ProgresSiesBundle\Form\ImageType;
+use PW\ProgresSiesBundle\Form\EpisodeType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class SaisonType extends AbstractType
 {
@@ -18,8 +20,10 @@ class SaisonType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('titre',   TextType::class)
-                ->add('num',     IntegerType::class);
+        $builder->add('episodes',       CollectionType::class, array(
+                    'entry_type'    =>  EpisodeType::class))
+                ->add('nbEpisodes',  IntegerType::class)
+                ->add('submit',         SubmitType::class, array('label'  =>  'Mettre à jour'));
     }
     
     /**

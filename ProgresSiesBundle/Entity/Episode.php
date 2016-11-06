@@ -4,6 +4,7 @@ namespace PW\ProgresSiesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Episode
  *
@@ -22,7 +23,7 @@ class Episode
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PW\ProgresSiesBundle\Entity\Saison")
+     * @ORM\ManyToOne(targetEntity="PW\ProgresSiesBundle\Entity\Saison",cascade={"persist"}, inversedBy="episodes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $saison;
@@ -34,6 +35,12 @@ class Episode
      */
     private $titre;
 
+    /**
+     * @ORM\Column(name="num", type="integer")
+     * @Assert\Range(min="1", minMessage="Choisissez un nombre supérieur à 0")
+     */
+    private $num;
+    
     /**
      * @var bool
      *
@@ -120,5 +127,29 @@ class Episode
     public function getSaison()
     {
         return $this->saison;
+    }
+
+    /**
+     * Set num
+     *
+     * @param integer $num
+     *
+     * @return Episode
+     */
+    public function setNum($num)
+    {
+        $this->num = $num;
+
+        return $this;
+    }
+
+    /**
+     * Get num
+     *
+     * @return integer
+     */
+    public function getNum()
+    {
+        return $this->num;
     }
 }

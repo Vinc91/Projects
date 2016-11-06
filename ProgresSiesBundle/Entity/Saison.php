@@ -4,6 +4,7 @@ namespace PW\ProgresSiesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Saison
@@ -29,6 +30,12 @@ class Saison
     private $serie;
 
     /**
+     * @ORM\OnetoMany(targetEntity="PW\ProgresSiesBundle\Entity\Episode", mappedBy="saison")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $episodes;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255)
@@ -44,6 +51,13 @@ class Saison
     private $num;
 
     /**
+     * @ORM\Column(name="nb_episodes", type="integer")
+     * @Assert\Range(min="0", minMessage="Choisissez un nombre positif")
+     */
+    private $nbEpisodes;
+
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="checked", type="boolean")
@@ -57,9 +71,10 @@ class Saison
      */
     private $avancement;
 
-
     public function __construct(){
         $this->avancement=0;
+        $this->nbEpisodes=0;
+        $this->episodes= new ArrayCollection();
     }
     /**
      * Get id
@@ -190,5 +205,93 @@ class Saison
     public function getNum()
     {
         return $this->num;
+    }
+
+    /**
+     * Add episode
+     *
+     * @param \PW\ProgresSiesBundle\Entity\Episode $episode
+     *
+     * @return Saison
+     */
+    public function addEpisode(\PW\ProgresSiesBundle\Entity\Episode $episode)
+    {
+        $this->episodes[] = $episode;
+        $episode->setSaison($this);
+        return $this;
+    }
+
+    /**
+     * Remove episode
+     *
+     * @param \PW\ProgresSiesBundle\Entity\Episode $episode
+     */
+    public function removeEpisode(\PW\ProgresSiesBundle\Entity\Episode $episode)
+    {
+        $this->episodes->removeElement($episode);
+    }
+
+    /**
+     * Get episodes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEpisodes()
+    {
+        return $this->episodes;
+    }
+
+    public function searchNum($episodes) {
+
+        $num = 1;
+        foreach($episodes as $episode) {
+            if($episode->getNum() != $num) {
+                return $num;
+            }else{
+                $num=$num+1;
+            }
+        }
+        return $num;
+    }
+
+    /**
+     * Set nbEpisodes
+     *
+     * @param integer $nbEpisodes
+     *
+     * @return Saison
+     */
+    public function setNbEpisodes($nbEpisodes)
+    {
+        $this->nbEpisodes = $nbEpisodes;
+
+        return $this;
+    }
+
+    /**
+     * Get nbEpisodes
+     *
+     * @return integer
+     */
+    public function getNbEpisodes()
+    {
+        return $this->nbEpisodes;
+    }
+
+    public function setAvancementTotal() {
+        $episodes = $this->getEpisodes();
+        $avanctotale=0;
+        foreach($episodes as $episodes) {
+            if($episodes->getChecked() == true) {
+                $avanctotale = $avanctotale + 100;
+            }
+        }
+        if($this->nbEpisodes >0) {
+        $avanctotale = $avanctotale / $this->nbEpisodes;
+        }else{
+            $avanctotale=0;
+        }
+
+        $this->setAvancement(round($avanctotale));
     }
 }

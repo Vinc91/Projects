@@ -104,18 +104,5 @@ class Image
         return $this->alt;
     }
 
-    public function upload() {
-
-        if(null == $this->fichier) {
-            return;
-        }
-
-        $name = $this->fichier->getClientOriginalName();
-        $this->fichier->move(__DIR__.'/../Resources/images', $name);
-        $this->url = '../images/'.$name;
-        $this->alt = $name;
-
-    }
-
 }
 

@@ -2,6 +2,8 @@
 
 namespace PW\ProgresSiesBundle\Repository;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\ORM\QueryBuilder;
 /**
  * SerieRepository
  *
@@ -10,4 +12,16 @@ namespace PW\ProgresSiesBundle\Repository;
  */
 class SerieRepository extends \Doctrine\ORM\EntityRepository
 {
+		public function getSeries($page, $nbPerPage){
+		$query=$this->createQueryBuilder('s')
+					->leftJoin('s.image', 'i')
+					->addSelect('i')
+					->leftJoin('s.genres', 'g')
+					->addSelect('g')
+					->orderBy('s.titre', 'ASC')
+					->getQuery();
+		$query->setFirstResult(($page-1)*$nbPerPage)
+			  ->setMaxResults($nbPerPage);
+		return new Paginator($query, true);
+	}
 }
