@@ -11,10 +11,9 @@ pw_progres_sies_view:
         saisonid:    0
 
 pw_progres_sies_view_saison:
-    path:     /progressies/saison/{id}/{choice}
+    path:     /progressies/saison/{id}
     defaults:
         _controller: PWProgresSiesBundle:ProgresSies:viewsaison
-        choice:      0
 
 pw_progres_sies_viewall:
     path:     /progressies/mes_series/{page}

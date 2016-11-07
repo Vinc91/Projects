@@ -85,7 +85,7 @@ class ProgresSiesController extends Controller
     }
 
 
-    public function viewsaisonAction($id, $choice, Request $request)
+    public function viewsaisonAction($id, Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
     	$SaisonsRep= $em->getRepository('PWProgresSiesBundle:Saison');
@@ -99,21 +99,6 @@ class ProgresSiesController extends Controller
     	);
     	$oldnbEpisodes = $saison->getNbEpisodes();
     	$form=$this->get('form.factory')->create(SaisonType::class,$saison);
-    	if($choice ==1) {
-    		$episode = new Episode();
-    		$saison->addEpisode($episode);
-    		$saison->setNbEpisodes($saison->getNbEpisodes()+1);
-    		$num = $saison->searchNum($episodes);
-    		$episode->setNum($num);
-            $episode->setTitre($serie->getTitre().' - Saison '.$saison->getNum().' - Episode '.$episode->getNum());
-            $saison->setAvancementTotal();
-            $em->persist($saison);
-            $em->persist($episode);
-            $em->flush();
-            return $this->redirectToRoute('pw_progres_sies_view_saison', array(
-            	 'id' => $saison->getId(),
-				 'choice' => 0));
-    	}
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
       		if($oldnbEpisodes <= $saison->getNbEpisodes()){
       			for($count=0; $count < $saison->getNbEpisodes() - $oldnbEpisodes;$count++) {
