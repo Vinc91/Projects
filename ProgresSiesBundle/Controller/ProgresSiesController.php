@@ -36,6 +36,9 @@ class ProgresSiesController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$Series= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Serie');
     	$serie = $Series->find($id);
+    	if($serie == null){
+    		throw new NotFoundHttpException('Serie introuvable');
+    	}
     	$SaisonsRep= $this->getDoctrine()->getManager()->getRepository('PWProgresSiesBundle:Saison');
     	$saisons=$em->getRepository('PWProgresSiesBundle:Saison')->findBy(
     		array('serie' => $serie),
@@ -90,6 +93,9 @@ class ProgresSiesController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$SaisonsRep= $em->getRepository('PWProgresSiesBundle:Saison');
     	$saison = $SaisonsRep->find($id);
+    	if($saison == null){
+    		throw new NotFoundHttpException('Saison introuvable');
+    	}
     	$serie = $saison->getSerie();
     	$episodes=$em->getRepository('PWProgresSiesBundle:Episode')->findBy(
     		array('saison' => $saison),
