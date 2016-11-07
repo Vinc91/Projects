@@ -4,6 +4,7 @@ namespace PW\ProgresSiesBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PW\ProgresSiesBundle\Entity\Serie;
+use PW\UserBundle\Entity\User;
 use PW\ProgresSiesBundle\Entity\Saison;
 use PW\ProgresSiesBundle\Entity\Image;
 use PW\ProgresSiesBundle\Entity\Episode;
@@ -20,9 +21,12 @@ class ProgresSiesController extends Controller
     {
         
     $em = $this->getDoctrine()->getManager();
-
+    $currentuser = $this->get('security.token_storage')->getToken()->getUser()->getUsername();
+    $user= $this->getDoctrine()
+    			->getRepository('PWUserBundle:User')
+    			->findOneBy(array('username'=>$currentuser));
     $Series = $em->getRepository('PWProgresSiesBundle:Serie')->findBy(
-      array(),
+      array('user'=> $user),
       array('maj'=> 'desc'),
       3, 
       0 
@@ -171,10 +175,14 @@ class ProgresSiesController extends Controller
 
     public function viewallAction($page)
     {
+    	$currentuser = $this->get('security.token_storage')->getToken()->getUser()->getUsername();
+    	$user= $this->getDoctrine()
+    				->getRepository('PWUserBundle:User')
+    				->findOneBy(array('username'=>$currentuser));
     	$Series = $this->getDoctrine()
       		->getManager()
       		->getRepository('PWProgresSiesBundle:Serie')
-      		->getSeries($page, 3);
+      		->getSeriesByUserId($page, 3,$user->getId());
 
 
     $nbPages = ceil(count($Series) / 3);
@@ -192,9 +200,16 @@ class ProgresSiesController extends Controller
     	$form= $this->get('form.factory')->create(SerieType::class, $serie);
     	
 
-
+    	/*$currentuser = $this->get('security.token_storage')->getUser()->getUsername();
+    	$user= $this->getDoctrine()->getRepository('PWUserBundle:User')
+    	->findOneBy(array('username'=>$currentuser));
+		*/
     	if( $request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
+    		$currentuser = $this->get('security.token_storage')->getToken()->getUser()->getUsername();
+    		$user= $this->getDoctrine()
+    					->getRepository('PWUserBundle:User')
+    					->findOneBy(array('username'=>$currentuser));
     		for($count=0; $count < $serie->getNbSaisons(); $count++) {
             	$saison = new Saison();
             	$serie->addSaison($saison);
@@ -207,7 +222,9 @@ class ProgresSiesController extends Controller
         	}
     		$em = $this->getDoctrine()->getManager();
     		$serie->setMaj();
+    		$user->addSerie($serie);
     		$em->persist($serie);
+    		$em->persist($user);
     		$em->flush();
     		return $this->redirectToRoute('pw_progres_sies_view', array('id'=> $serie->getId()));
     	}
@@ -298,9 +315,12 @@ class ProgresSiesController extends Controller
     {
     
     $em = $this->getDoctrine()->getManager();
-
+    $currentuser = $this->get('security.token_storage')->getToken()->getUser()->getUsername();
+    $user= $this->getDoctrine()
+    			->getRepository('PWUserBundle:User')
+    			->findOneBy(array('username'=>$currentuser));
     $Series = $em->getRepository('PWProgresSiesBundle:Serie')->findBy(
-      array(),
+      array('user'=> $user),
       array('maj'=> 'desc'),
       3, 
       0 

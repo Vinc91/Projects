@@ -22,7 +22,7 @@ class SerieType extends AbstractType
                 ->add('date',       IntegerType::class)
                 ->add('createur',   TextType::class)
                 ->add('nbSaisons',  IntegerType::class)
-                ->add('image',      ImageType::class, array('required'=>false))
+                ->add('image',      ImageType::class)
                 ->add('genres',      EntityType::class, array(
                     'class'        => 'PWProgresSiesBundle:Genre',
                     'choice_label' => 'name',

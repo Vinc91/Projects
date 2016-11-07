@@ -50,6 +50,12 @@ class Serie
     private $image;
 
     /**
+     * @ORM\ManyToOne(targetEntity="PW\UserBundle\Entity\User", cascade={"persist"}, inversedBy="series")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="integer", nullable=true)
@@ -353,5 +359,29 @@ class Serie
     public function getMaj()
     {
         return $this->maj;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \PW\UserBundle\Entity\User $user
+     *
+     * @return Serie
+     */
+    public function setUser(\PW\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \PW\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

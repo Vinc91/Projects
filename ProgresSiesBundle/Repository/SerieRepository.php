@@ -23,5 +23,21 @@ class SerieRepository extends \Doctrine\ORM\EntityRepository
 		$query->setFirstResult(($page-1)*$nbPerPage)
 			  ->setMaxResults($nbPerPage);
 		return new Paginator($query, true);
-	}
+		}
+
+		public function getSeriesByUserId($page, $nbPerPage, $userid){
+		$query=$this->createQueryBuilder('s')
+					->leftJoin('s.image', 'i')
+					->addSelect('i')
+					->leftJoin('s.genres', 'g')
+					->addSelect('g')
+					->leftJoin('s.user', 'u')
+					->addSelect('u')
+					->where('s.user ='.$userid)
+					->orderBy('s.titre', 'ASC')
+					->getQuery();
+		$query->setFirstResult(($page-1)*$nbPerPage)
+			  ->setMaxResults($nbPerPage);
+		return new Paginator($query, true);
+		}
 }
