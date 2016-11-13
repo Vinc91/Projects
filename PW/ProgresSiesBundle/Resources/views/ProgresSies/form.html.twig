@@ -1,0 +1,28 @@
+<div class="well">
+
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {{ form_errors(form) }}
+
+   {{ form_row(form.titre) }}
+
+  <div class="form-group">
+    {{ form_label(form.date, "Date de création", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.date) }}
+    <div class="col-sm-10">
+      {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  {{ form_row(form.createur) }}
+  {{form_row(form.image)}}
+  {{ form_row(form.nbSaisons)}}
+
+  {{ form_row(form.genres)}}
+
+   {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+
+  {{ form_rest(form) }}
+  {{ form_end(form) }}
+
+</div>

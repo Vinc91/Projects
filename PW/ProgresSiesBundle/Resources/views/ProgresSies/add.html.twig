@@ -1,0 +1,15 @@
+{% extends "PWProgresSiesBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Ajout d'une série{% endblock %}
+
+{% block header %}
+      <div id="header" class="starter-template" style="background-color:#FFFFFF; ">
+        <h1 style="text-align: center; font-size:50px">ProgresSies</h1>
+      </div>
+{% endblock %}
+
+{% block body %}
+	
+	<h3> Ajout d'une nouvelle série </h3>
+	{{ include("PWProgresSiesBundle:ProgresSies:form.html.twig") }}
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "PWProgresSiesBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - {{serie.titre}}{% endblock %}
+
+{% block header %}
+      <div id="header" class="starter-template" style="background-color:#FFFFFF; ">
+        <h1 style="text-align: center; font-size:50px">ProgresSies</h1>
+      </div>
+{% endblock %}
+
+    {% block menu %}
+         <div id="menu" class="col-md-3">
+      <h3> Dernières séries suivies </h3>
+
+      {{ render(controller("PWProgresSiesBundle:ProgresSies:menu")) }}
+    </div>
+    {% endblock %}
+
+{% block body %}
+ <div id="conteneur" class="col-sm-12">
+  <div class="row ">
+ 	 <div class="element col-sm-2" style="padding-top: 20px">
+ 		{% if serie.image is not null %}
+ 			<img src="{{ serie.image.url }}" width="180" height="250" alt=" {{serie.image.alt}}">
+ 		{% endif %}
+ 	 </div>
+   <div class="col-sm-1"></div>
+ 	 <div class="element col-sm-9" style="padding-left:40px">
+
+ 		<h2> {{ serie.titre}} </h2>
+     <p style="margin-top: 20px">Crée par : <strong>{{serie.createur}} ({{serie.date }}) </strong></p>
+		 <p>Nombres de saisons : <strong> {{ serie.nbsaisons }}</strong></p>
+     {% if not serie.genres.empty %}
+      <p>Genre : <strong>
+        {%for genre in serie.genres %}
+          {{genre.name}}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+        </strong>
+      </p>
+      {% endif %}
+
+    <p>Avancement totale : </p>
+    <div class="progress">
+      <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{serie.avancement}}" aria-valuemin="0" aria-valuemax="100" style="width: {{serie.avancement}}%;">
+      {{serie.avancement}}%
+      </div>
+   </div>
+  {% if serie.image is not null %}
+  <div class="col-sm-3"></div>
+   <div class="col-sm-9" style="padding-left:100px">
+    <a href="{{ path('pw_progres_sies_update', {'id': serie.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier la série
+    </a>
+    <a href="{{ path('pw_progres_sies_delete', {'id': serie.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer la série
+    </a>
+    </div>
+  {% else %}
+   <div style="padding-left: 515px">
+    <a href="{{ path('pw_progres_sies_update', {'id': serie.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier la série
+    </a>
+    <a href="{{ path('pw_progres_sies_delete', {'id': serie.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer la série
+    </a>
+    </div>
+  {% endif %}
+ 	</div>
+</div>
+</br>
+</div>
+
+
+ {% for saison in saisons %}
+<div class="well">
+
+ <div class="row">
+
+  <div class="col-md-4">
+    <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Saison {{saison.num}}
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="{{ path('pw_progres_sies_view', {'id': serie.id, 'choice': 1, 'saisonid': saison.id}) }}"> Marquer comme vue </a></li>
+      <li><a href="{{ path('pw_progres_sies_view', {'id': serie.id, 'choice': 2, 'saisonid': saison.id}) }}"> Marquer comme non vue </a></li>
+      <li role="separator" class="divider"></li>
+      <li><a href="{{ path('pw_progres_sies_view_saison', {'id': saison.id}) }}"> Episodes </a></li>
+    </ul>
+   </div>
+  </div>
+
+ <div class="col-md-8" style="padding-top:10px">
+  <div class="progress">
+    <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{saison.avancement}}" aria-valuemin="0" aria-valuemax="100" style="width: {{saison.avancement}}%;">
+      {{saison.avancement}}%
+    </div>
+  </div>
+ </div>
+
+ </div>
+
+</div>
+  {% endfor %}
+
+{% endblock %}

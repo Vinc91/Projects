@@ -1,0 +1,11 @@
+<ul class="nav nav-pills nav-stacked">
+  {% set i = 0 %}
+  {% for serie in Series if i<3 %}
+    <li>
+      <a href="{{ path('pw_progres_sies_view', {'id': serie.id}) }}">
+        {{ serie.titre }}
+      </a>
+    </li>
+    {% set i=i+1 %}
+  {% endfor %}
+</ul>
