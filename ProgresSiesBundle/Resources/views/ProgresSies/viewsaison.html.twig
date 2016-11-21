@@ -1,6 +1,6 @@
 {% extends "PWProgresSiesBundle::layout.html.twig" %}
 
-{% block title %}{{ parent() }} - View{% endblock %}
+{% block title %}{{ parent() }} - {{saison.titre}}{% endblock %}
 
 {% block header %}
       <div id="header" class="starter-template" style="background-color:#FFFFFF; ">
@@ -17,19 +17,19 @@
     {% endblock %}
 
 {% block body %}
- <div id="conteneur" style="display: flex; flex-wrap: nowrap; margin-top:20px; margin-bottom: 20px">
+ <div id="conteneur" class="col-sm-12">
+  <div class="row">
+   <div class="element col-sm-2" style="padding-top: 20px">
+    {% if serie.image is not null %}
+      <img src="{{ serie.image.url }}" width="180" height="250" alt=" {{serie.image.alt}}">
+    {% endif %}
+   </div>
+   <div class="col-sm-1"></div>
+   <div class="element col-sm-9" style="padding-left:40px">
 
- 	 <div class="element">
- 		{% if serie.image is not null %}
- 			<img src="{{ serie.image.url }}" width="180" height="250" alt=" {{serie.image.alt}}">
- 		{% endif %}
- 	 </div>
-
- 	 <div class="element" style="margin-left: 20px; margin-top:-25px">
-
- 		<h2> {{ serie.titre}} </h2>
+    <h2> {{ serie.titre}} </h2>
      <p style="margin-top: 20px">Crée par : <strong>{{serie.createur}} ({{serie.date }}) </strong></p>
-		 <p>Nombres de saisons : <strong> {{ serie.nbsaisons }}</strong></p>
+     <p>Nombres de saisons : <strong> {{ serie.nbsaisons }}</strong></p>
      {% if not serie.genres.empty %}
       <p>Genre : <strong>
         {%for genre in serie.genres %}
@@ -46,11 +46,12 @@
       </div>
    </div>
   {% if serie.image is not null %}
-   <div style="padding-left: 225px">
-       <a href="{{ path('pw_progres_sies_view', {'id': serie.id}) }}" class="btn btn-default">
+  <div class="col-sm-3"></div>
+   <div class="col-sm-9" style="padding-left:20px">
+    <a href="{{ path('pw_progres_sies_view', {'id': serie.id}) }}" class="btn btn-default">
         <i class="glyphicon glyphicon-menu-left"></i>
         Retour
-      </a>
+    </a>
     <a href="{{ path('pw_progres_sies_update', {'id': serie.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-edit"></i>
       Modifier la série
@@ -72,8 +73,9 @@
     </a>
     </div>
   {% endif %}
- 	</div>
-
+  </div>
+</div>
+</br>
 </div>
 
 <div class="well">
@@ -129,16 +131,11 @@
         {% set i= i+1 %}
       {% endfor %}
     </div>
-  </div>
-    <div class="form-group">
-      <div class="row">
-
-        <div class="col-sm-10" style="padding-left: 700px">
-              {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
-
-        </div>
-      </div>
+    <div class="col-sm-2" >
+     {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+     </div>
     </div>
+
       
 {{ form_end(form) }}
 </div>

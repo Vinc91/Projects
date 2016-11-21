@@ -18,9 +18,9 @@ class SerieType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('titre',      TextType::class)
+        $builder->add('titre',      TextType::class, array('label'  =>  'Titre de la série'))
                 ->add('date',       IntegerType::class)
-                ->add('createur',   TextType::class)
+                ->add('createur',   TextType::class, array('label'  =>  'Créateur'))
                 ->add('nbSaisons',  IntegerType::class)
                 ->add('image',      ImageType::class)
                 ->add('genres',      EntityType::class, array(
@@ -28,7 +28,7 @@ class SerieType extends AbstractType
                     'choice_label' => 'name',
                     'multiple'     => true,
                     'expanded'     => true))
-                ->add('submit', SubmitType::class);
+                ->add('submit', SubmitType::class, array('label'  =>  'Ajouter'));
     }
     
     /**

@@ -1,6 +1,6 @@
 {% extends "PWProgresSiesBundle::layout.html.twig" %}
 
-{% block title %}{{ parent() }} - View{% endblock %}
+{% block title %}{{ parent() }} - {{serie.titre}}{% endblock %}
 
 {% block header %}
       <div id="header" class="starter-template" style="background-color:#FFFFFF; ">
@@ -10,22 +10,22 @@
 
     {% block menu %}
          <div id="menu" class="col-md-3">
-      <h3> Dernieres series suivies </h3>
+      <h3> Dernières séries suivies </h3>
 
       {{ render(controller("PWProgresSiesBundle:ProgresSies:menu")) }}
     </div>
     {% endblock %}
 
 {% block body %}
- <div id="conteneur" style="display: flex; flex-wrap: nowrap; margin-top:20px; margin-bottom: 20px">
-
- 	 <div class="element">
+ <div id="conteneur" class="col-sm-12">
+  <div class="row ">
+ 	 <div class="element col-sm-2" style="padding-top: 20px">
  		{% if serie.image is not null %}
  			<img src="{{ serie.image.url }}" width="180" height="250" alt=" {{serie.image.alt}}">
  		{% endif %}
  	 </div>
-
- 	 <div class="element" style="margin-left: 20px; margin-top:-25px">
+   <div class="col-sm-1"></div>
+ 	 <div class="element col-sm-9" style="padding-left:40px">
 
  		<h2> {{ serie.titre}} </h2>
      <p style="margin-top: 20px">Crée par : <strong>{{serie.createur}} ({{serie.date }}) </strong></p>
@@ -46,7 +46,8 @@
       </div>
    </div>
   {% if serie.image is not null %}
-   <div style="padding-left: 335px">
+  <div class="col-sm-3"></div>
+   <div class="col-sm-9" style="padding-left:100px">
     <a href="{{ path('pw_progres_sies_update', {'id': serie.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-edit"></i>
       Modifier la série
@@ -69,7 +70,8 @@
     </div>
   {% endif %}
  	</div>
-
+</div>
+</br>
 </div>
 
 
@@ -106,16 +108,4 @@
 </div>
   {% endfor %}
 
-{#
-<div class="col-md-9" style="margin-left:525px;">
- 	 <a href="{{ path('pw_progres_sies_update', {'id': serie.id}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-edit"></i>
-      Modifier la série
-    </a>
-    <a href="{{ path('pw_progres_sies_delete', {'id': serie.id}) }}" class="btn btn-danger">
-      <i class="glyphicon glyphicon-trash"></i>
-      Supprimer la série
-    </a>
-</div>
-#}
 {% endblock %}

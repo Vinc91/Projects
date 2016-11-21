@@ -1,0 +1,8 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<h3><strong>Mes informations</strong></h3></br>
+<div class="well fos_user_user_show">
+    <p>{# 'profile.show.username'|trans #}
+    <strong>Nom d'utilisateur</strong>: {{ user.username }}</p>
+    <p>{# 'profile.show.email'|trans #}
+    <strong>Adresse e-mail</strong>: {{ user.email }}</p>
+</div>

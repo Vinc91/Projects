@@ -199,11 +199,6 @@ class ProgresSiesController extends Controller
     
     	$form= $this->get('form.factory')->create(SerieType::class, $serie);
     	
-
-    	/*$currentuser = $this->get('security.token_storage')->getUser()->getUsername();
-    	$user= $this->getDoctrine()->getRepository('PWUserBundle:User')
-    	->findOneBy(array('username'=>$currentuser));
-		*/
     	if( $request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
     		$currentuser = $this->get('security.token_storage')->getToken()->getUser()->getUsername();

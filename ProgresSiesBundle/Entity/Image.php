@@ -36,19 +36,6 @@ class Image
      */
     private $alt;
 
-    private $fichier;
-
-    public function getFichier() {
-
-        return $this->fichier;
-
-    }
-
-    public function setFichier(UploadedFile $fichier=null) {
-
-        $this->fichier = $fichier;
-
-    }
 
     /**
      * Get id

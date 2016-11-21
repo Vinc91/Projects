@@ -12,7 +12,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="pw_serie")
  * @ORM\Entity(repositoryClass="PW\ProgresSiesBundle\Repository\SerieRepository")
- * @UniqueEntity(fields="titre", message="Une serie existe déjà avec ce titre.")
  */
 class Serie
 {
@@ -39,7 +38,7 @@ class Serie
     /**
      * @var string
      *
-     * @ORM\Column(name="titre", type="string", length=255, unique=true)
+     * @ORM\Column(name="titre", type="string", length=255)
      */
     private $titre;
 

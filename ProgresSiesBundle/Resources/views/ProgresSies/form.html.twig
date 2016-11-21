@@ -4,14 +4,7 @@
 
   {{ form_errors(form) }}
 
-  <div class="form-group">
-    {{ form_label(form.titre, "Titre de la série", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-
-    <div class="col-sm-10">
-      {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
-    </div>
-
-  </div>
+   {{ form_row(form.titre) }}
 
   <div class="form-group">
     {{ form_label(form.date, "Date de création", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
